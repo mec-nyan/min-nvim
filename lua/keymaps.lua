@@ -12,6 +12,10 @@ keybindings = {
 	{ mode = 'n', key = '<ESC>Q', cmd = ':qa<CR>', opts = { desc = 'Nano::QuitAll' } },
 	{ mode = 'n', key = '<ESC>o', cmd = ':only<CR>', opts = { desc = 'Nano::Only' } },
 	{ mode = 'n', key = '<ESC>w', cmd = ':tabclose<CR>', opts = { desc = 'Nano::CloseTab' } },
+
+	-- LSP
+	{ mode = 'n', key = 'K', cmd = ':lua vim.lsp.buf.hover()<CR>', opts = { desc = 'Nano::Hover' } },
+	{ mode = 'n', key = '<leader>rn', cmd = ':lua vim.lsp.buf.rename()<CR>', opts = { desc = 'Nano::Hover' } },
 }
 
 for _, kb in pairs(keybindings) do
