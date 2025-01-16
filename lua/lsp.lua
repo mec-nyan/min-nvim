@@ -32,13 +32,35 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('FileType', {
 	pattern = 'lua',
-	callback = function(x)
+	callback = function(fname)
 		vim.lsp.start({
 			name = 'Nano::lua_ls',
 			cmd = { 'lua-language-server' },
+			root_dir = vim.fs.root(fname.buf, { 'init.lua' }),
+			workspace_folders = nil,
+			settings = {
+				config = {
+					runtime = {
+						version = 'LuaJIT',
+					},
+					single_file_support = true,
+					workspace = {
+						checkThirdParty = false,
+						library = {
+							vim.env.VIMRUNTIME,
+						},
+					},
+				},
+			},
 		})
 	end,
 })
+
+-- Some commands.
+-- TODO: Open the lsp info without line numbers, etc.
+-- Add a key binding to close this window with 'q'.
+vim.api.nvim_create_user_command('LspCheck', ':vert checkhealth lsp', { desc = 'Nano:: LSP Info' })
+
 
 
 return {}
