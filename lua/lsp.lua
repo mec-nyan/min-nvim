@@ -34,33 +34,28 @@ vim.api.nvim_create_autocmd('FileType', {
 	pattern = 'lua',
 	callback = function(fname)
 		vim.lsp.start({
-			name = 'Nano::lua_ls',
-			cmd = { 'lua-language-server' },
-			root_dir = vim.fs.root(fname.buf, { 'init.lua' }),
+			name = 'Nano_lua_ls',
+			-- TODO: Add Neovim's libraries conditionally only when needed.
+			cmd = { 'lua-language-server', '--configpath', '~/.config/nvim/.luarc.json' },
+			root_dir = vim.fs.dirname(vim.fs.find({ '.git', 'nvim' }, { upward = true })[1]),
 			workspace_folders = nil,
-			settings = {
-				config = {
-					runtime = {
-						version = 'LuaJIT',
-					},
-					single_file_support = true,
-					workspace = {
-						checkThirdParty = false,
-						library = {
-							vim.env.VIMRUNTIME,
-						},
-					},
-				},
-			},
+			-- Settings are now on .luarc.json (And it works!).
+			-- settings = { ... }
 		})
 	end,
 })
 
 -- Some commands.
--- TODO: Open the lsp info without line numbers, etc.
--- Add a key binding to close this window with 'q'.
 vim.api.nvim_create_user_command('LspCheck', ':vert checkhealth lsp', { desc = 'Nano:: LSP Info' })
 
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = 'checkhealth',
+	callback = function()
+		-- TODO: Can this be done directly from the lua api?
+		vim.cmd ":set nonumber norelativenumber"
+		vim.cmd ":noremap<buffer> q :close<CR>"
+	end
+})
 
 
 return {}
