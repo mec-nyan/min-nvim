@@ -6,4 +6,4 @@ require "keymaps"
 require "colorscheme"
 require "diagnostic"
 require "lsp"
-require "smooth"
+require "smooth".setup()

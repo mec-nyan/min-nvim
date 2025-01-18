@@ -2,41 +2,64 @@
 --]]
 
 -- TODO: Add ease functions.
--- TODO: Scroll the page, not the cursor. Keep cursor position relative to the window (like <C-d> does).
 
-local function scroll_next()
-	local scrolloff = vim.o.scrolloff
-	local height = vim.api.nvim_win_get_height(0)
+local smooth = {}
 
-	local pos = vim.api.nvim_win_get_cursor(0)
-	local lines = vim.api.nvim_buf_line_count(0)
+-- Default delay. Use "setup(delay)" to use a custom delay.
+local _delay = 16
 
-	local speed = 16
-	for _ = 1, height do
-		if pos[1] < (lines - scrolloff) then
-			pos[1] = pos[1] + 1
-			vim.api.nvim_win_set_cursor(0, pos)
-			vim.cmd.sleep(tostring(speed) .. "m")
-			vim.cmd("redraw")
+function make_callback_next(timer, amount, limit)
+	local start = 1
+	local ctrl_e = vim.api.nvim_replace_termcodes('<C-e>', false, false, true)
+	return function()
+		vim.api.nvim_feedkeys(ctrl_e, 'n', false)
+		local line = vim.fn.winline()
+		if start == amount or line == limit then
+			timer:stop()
+			timer:close()
 		end
+		start = start + 1
 	end
 end
 
-local function scroll_prev()
-	local height = vim.api.nvim_win_get_height(0)
+function smooth.scroll_next_w_timer()
+	local height = vim.fn.winheight(0)
+	local amount = vim.wo.scroll
+	local timer = vim.uv.new_timer()
+	timer:start(0, _delay, vim.schedule_wrap(make_callback_next(timer, amount, height)))
+	-- In case something goes wrong, you can stop this timer.
+	return timer
+end
 
-	local pos = vim.api.nvim_win_get_cursor(0)
-
-	local speed = 16
-	for _ = 1, height do
-		if pos[1] > 1 then
-			pos[1] = pos[1] - 1
-			vim.api.nvim_win_set_cursor(0, pos)
-			vim.cmd.sleep(tostring(speed) .. "m")
-			vim.cmd("redraw")
+function make_callback_prev(timer, amount)
+	local start = 1
+	local ctrl_y = vim.api.nvim_replace_termcodes('<C-y>', false, false, true)
+	return function()
+		vim.api.nvim_feedkeys(ctrl_y, 'n', false)
+		local line = vim.fn.winline()
+		if start == amount or line == 0 then
+			timer:stop()
+			timer:close()
 		end
+		start = start + 1
 	end
 end
 
-vim.keymap.set('n', '<C-u>', scroll_prev, { desc = "Nano::Prev page" })
-vim.keymap.set('n', '<C-d>', scroll_next, { desc = "Nano::Next page" })
+function smooth.scroll_prev_w_timer()
+	local amount = vim.wo.scroll
+	local timer = vim.uv.new_timer()
+	timer:start(0, _delay, vim.schedule_wrap(make_callback_prev(timer, amount)))
+	-- In case something goes wrong, you can stop this timer.
+	return timer
+end
+
+
+--- Sets default delay and adds key bindings to replace <C-u> and <C-d>.
+-- @param delay (optional) The delay in ms (default = 16).
+function smooth.setup(delay)
+	_delay = delay or _delay
+	vim.keymap.set('n', '<C-u>', smooth.scroll_prev_w_timer, { desc = "Nano::Prev page" })
+	vim.keymap.set('n', '<C-d>', smooth.scroll_next_w_timer, { desc = "Nano::Next page" })
+end
+
+return smooth
