@@ -1,28 +1,52 @@
 --- LSP configuration.
+-- I've added the prefix "Nano_" to the name of the servers to be able to tell them apart
+-- from other (possibly installed) servers and configurations.
+-- Feel free to change that to your liking.
 
 --- Some settings.
--- I like a box around the popups.
+
 local border_style = 'rounded'
 
+-- Add a rounded box for these elements:
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 	vim.lsp.handlers.hover, {
 		border = border_style,
 	}
 )
 
+-- Add a rounded box for these elements:
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 	vim.lsp.handlers.hover, {
 		border = border_style,
 	}
 )
 
+-- Add a rounded box for these elements:
 vim.diagnostic.config({
 	float = { border = border_style }
 })
 
--- TODO: Add LSs for Rust, C++ and Python.
+-- TODO: Add LSs for C++ and Python.
+
+--- Start Rust's language server.
+-- Depends on "rust-analyzer" being installed (duh!).
+-- By default, rustup will install a "thing" called rust-analyzer that does NOT work.
+-- Be sure you have a working binary (i.e. install it with "rustup component add rust-analyzer").
+local function start_rust_analyzer()
+	vim.lsp.start({
+		name = 'Nano_rust_analyzer',
+		cmd = { 'rust-analyzer' },
+		root_dir = vim.fs.root(0, { 'Cargo.toml' }),
+	})
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = 'rust',
+	callback = start_rust_analyzer,
+})
 
 --- Start Go's language server.
+-- Depends on "gopls" beng installed.
 local function start_gopls()
 	vim.lsp.start({
 		name = 'Nano_gopls',
@@ -37,6 +61,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 --- Start Lua's language server.
+-- Depends on "lua-language-server" being installed.
 local function start_lua_ls()
 	local command = { 'lua-language-server' }
 	local root = vim.fs.dirname(vim.fs.find({ '.git', 'nvim' }, { upward = true })[1])
@@ -70,6 +95,8 @@ local function restart_ls()
 		start_gopls()
 	elseif ft == 'lua' then
 		start_lua_ls()
+	elseif ft == 'rust' then
+		start_rust_analyzer()
 	end
 end
 
