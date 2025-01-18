@@ -37,6 +37,7 @@ local function start_rust_analyzer()
 		name = 'Nano_rust_analyzer',
 		cmd = { 'rust-analyzer' },
 		root_dir = vim.fs.root(0, { 'Cargo.toml' }),
+		single_file_support = true
 	})
 end
 

@@ -19,7 +19,7 @@ local kind_sel = { bg = "#232635", fg = "#f4b8e5" }
 local extra = { bg = "#232635", fg = "#737995" }
 local extra_sel = { bg = "#232635", fg = "#c6d0f6" }
 local sbar = { bg = "#111317" }
-local thumb = { bg = "#343951" }
+local thumb = { bg = "#8caaef" }
 
 vim.cmd.highlight({ args = { "Pmenu", "guibg=" .. item.bg, "guifg=" .. item.fg } })
 vim.cmd.highlight({ args = { "PmenuSel", "guibg=" .. item_sel.bg, "guifg=" .. item_sel.fg } })
