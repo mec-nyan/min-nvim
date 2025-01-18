@@ -1,5 +1,7 @@
---[[ Keybindings for Neovim
---]]
+--- Keybindings.
+-- As few and organised as possible.
+-- I've added the prefix "Nano::" in the description so I know I've modified these.
+-- And that way you can easily add your own prefix i.e. ":%s/Nano::/your_name/".
 
 local setkey = vim.keymap.set
 

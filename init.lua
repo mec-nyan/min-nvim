@@ -1,4 +1,15 @@
---[[ Neovim configuration from scratch.
+--[[
+
+    ┏┳┓╻┏┓╻   ┏┓╻╻ ╻╻┏┳┓
+    ┃┃┃┃┃┗┫   ┃┗┫┃┏┛┃┃┃┃
+    ╹ ╹╹╹ ╹   ╹ ╹┗┛ ╹╹ ╹
+
+            An
+          almost
+        minimalist
+       configuration
+     for neovim editor.
+
 --]]
 
 require "options"

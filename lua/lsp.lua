@@ -1,6 +1,7 @@
---[[ LSP configuration.
---]]
+--- LSP configuration.
 
+--- Some settings.
+-- I like a box around the popups.
 local border_style = 'rounded'
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -19,6 +20,9 @@ vim.diagnostic.config({
 	float = { border = border_style }
 })
 
+-- TODO: Add LSs for Rust, C++ and Python.
+
+--- Start Go's language server.
 local function start_gopls()
 	vim.lsp.start({
 		name = 'Nano_gopls',
@@ -32,6 +36,7 @@ vim.api.nvim_create_autocmd('FileType', {
 	callback = start_gopls,
 })
 
+--- Start Lua's language server.
 local function start_lua_ls()
 	local command = { 'lua-language-server' }
 	local root = vim.fs.dirname(vim.fs.find({ '.git', 'nvim' }, { upward = true })[1])
@@ -44,10 +49,15 @@ local function start_lua_ls()
 		cmd = command,
 		root_dir = root,
 		workspace_folders = nil,
-		-- Settings are now on .luarc.json (And it works!).
+		-- Settings now live on .luarc.json (And it works!).
 		-- settings = { ... }
 	})
 end
+
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = 'lua',
+	callback = start_lua_ls,
+})
 
 local function stop_ls()
 	vim.lsp.stop_client(vim.lsp.get_clients())
@@ -63,16 +73,12 @@ local function restart_ls()
 	end
 end
 
-vim.api.nvim_create_autocmd('FileType', {
-	pattern = 'lua',
-	callback = start_lua_ls,
-})
-
--- Some commands.
+-- Commands.
 vim.api.nvim_create_user_command('LspCheck', ':vert checkhealth lsp', { desc = 'Nano:: LSP Info' })
 vim.api.nvim_create_user_command('LspStop', stop_ls, { desc = 'Nano:: LSP Info' })
 vim.api.nvim_create_user_command('LspRestart', restart_ls, { desc = 'Nano:: LSP Info' })
 
+-- Allow to exit the LSP health/info window with 'q'.
 vim.api.nvim_create_autocmd('FileType', {
 	pattern = 'checkhealth',
 	callback = function()

@@ -1,4 +1,4 @@
---[[ Colorscheme options.
+--- Colorscheme options.
 --
 -- Requires the colorscheme to be installed, i.e. in */site/pack/*/start/*
 -- I'm using "Catppuccin" (https://github.com/catppuccin/nvim) without a plugin manager.
@@ -6,7 +6,6 @@
 --
 -- I always match my terminal colorscheme with nvim's, so transparent backgrounds work great
 -- (And look very nice indeed!).
---]]
 
 require "catppuccin".setup { transparent_background = true }
 

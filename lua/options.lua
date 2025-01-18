@@ -1,5 +1,4 @@
---[[ My options.
---]]
+-- My options.
 
 vim.o.hlsearch = true
 vim.o.modeline = true
