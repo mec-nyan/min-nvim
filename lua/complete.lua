@@ -9,7 +9,25 @@ local setkey = vim.keymap.set
 -- it should suggest "Printf" etc.
 --
 -- BTW it works relly well anyway 😛
-setkey('i', '<Tab>', '<C-x><C-o>', { desc = "Nano::Tab Complete" })
+--
+-- The next idea comes straight from (neo)Vim's documentation.
+-- See (:h E5665)
+-- TODO: We can improve this function to trigger omnifunc when typing, etc.
+local function CleverTab()
+	-- TODO: Use the lua api...
+	local str = vim.fn.strpart(vim.fn.getline('.'), 0, vim.fn.col('.')-1)
+	local tab = vim.api.nvim_replace_termcodes('<Tab>', false, false, true)
+	local omni = vim.api.nvim_replace_termcodes('<C-x><C-o>', false, false, true)
+	if string.match(str, '^%s*$') ~= nil then
+		vim.api.nvim_feedkeys(tab, 'n', false)
+	else
+		vim.api.nvim_feedkeys(omni, 'n', false)
+	end
+end
+
+setkey('i', '<Tab>', CleverTab, { desc = "Nano::Tab Complete" })
+
 -- I'll try <Tab> and <C-space> to see wich one I like the most.
 setkey('i', '<C-space>', '<C-x><C-o>', { desc = "Nano::Omni Complete" })
+
 setkey('i', '.', '.<C-x><C-o>', { desc = "Nano::Dot Complete" })
