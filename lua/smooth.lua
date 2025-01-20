@@ -2,6 +2,7 @@
 --]]
 
 -- TODO: Add ease functions.
+-- TODO: Implement "zz", "zt", "zb" and maybe others
 
 local smooth = {}
 
