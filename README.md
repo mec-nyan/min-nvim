@@ -79,7 +79,7 @@ A lot!
 - [ ] Completion:
     - [ ] Trigger completion (maybe fuzzy...).
         - [x] Autotrigger on dot (can improve).
-        - [x] Trigger with <Tab>/<C-space>.
+        - [x] Trigger with \<Tab> / \<C-space>.
         - [ ] Organise imports when completion inserts a new module name
         - [x] Silence message "Pattern not found" 😅
 - [ ] Key bindings:
