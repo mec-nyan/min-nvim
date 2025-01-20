@@ -55,41 +55,41 @@ A lot!
 
 ## Checklist
 
-   I'll keep adding things in this list as I go!
+:warning:  I'll keep adding things in this list as I go!
 
 
-[ ] Vim options in a separate file.
-    [x] Add some personalised options.
-[ ] LSP:
-    [x] Firstly, make it work!
-    [ ] Add language servers:
-        [x] Lua
-        [x] Go
-        [x] Rust
-        [ ] C/C++
-        [ ] Python
-        [ ] Vim
-        [ ] Bash
-    [ ] Key bindings for common LSP functionality (check what's already mapped and if possible
+- [ ] Vim options in a separate file.
+    - [x] Add some personalised options.
+- [ ] LSP:
+    - [x] Firstly, make it work!
+    - [ ] Add language servers:
+        - [x] Lua
+        - [x] Go
+        - [x] Rust
+        - [ ] C/C++
+        - [ ] Python
+        - [ ] Vim
+        - [ ] Bash
+    - [ ] Key bindings for common LSP functionality (check what's already mapped and if possible
     don't create extra key bindings).
-    [ ] "On save" stuff, i.e.
-        [ ] Format
-        [ ] Organise imports
-        [ ] Other
-[ ] Completion:
-    [ ] Trigger completion (maybe fuzzy...).
-        [x] Autotrigger on dot (can improve).
-        [x] Trigger with <Tab>/<C-space>.
-        [ ] Organise imports when completion inserts a new module name
-        [x] Silence message "Pattern not found" 😅
-[ ] Key bindings:
-    [x] Add my personal keybindings (i.e. i_CTRL-z to write, etc).
-    [ ] Keep keybindings in one place (Is it a good idea? Maybe it's better to set key bindings
+    - [ ] "On save" stuff, i.e.
+        - [ ] Format
+        - [ ] Organise imports
+        - [ ] Other
+- [ ] Completion:
+    - [ ] Trigger completion (maybe fuzzy...).
+        - [x] Autotrigger on dot (can improve).
+        - [x] Trigger with <Tab>/<C-space>.
+        - [ ] Organise imports when completion inserts a new module name
+        - [x] Silence message "Pattern not found" 😅
+- [ ] Key bindings:
+    - [x] Add my personal keybindings (i.e. i_CTRL-z to write, etc).
+    - [ ] Keep keybindings in one place (Is it a good idea? Maybe it's better to set key bindings
     where they belong i.e. Lsp key bindings in _lsp.lua_ etc).
-[ ] Appearance
-    [x] Diagnostics symbols and borders.
-    [ ] Custom Pmenu colours.
-    [x] Custom Pmenu kind
+- [ ] Appearance
+    - [x] Diagnostics symbols and borders.
+    - [ ] Custom Pmenu colours.
+    - [x] Custom Pmenu kind
         BTW I don't particularly like "icons" for this, they don't give me information about the
         item. I would like to use something like this:
         - f(x) (Function)
@@ -99,12 +99,12 @@ A lot!
         - {..} (Struct/Object)
         - \[..] (Array/List)
         - (,)  (Tuple)
-        You get the idea.
-[ ] Smooth scrolling.
-    [x] <C-d> & <C-u>
-    [ ] zz, zt, zb
-[ ] Easily explore mappings.
-[ ] Simple status line.
-[ ] Debugger?
-[ ] Treesitter?
-[ ] Breadcrums?
+        - You get the idea.
+- [ ] Smooth scrolling.
+    - [x] <C-d> & <C-u>
+    - [ ] zz, zt, zb
+- [ ] Easily explore mappings.
+- [ ] Simple status line.
+- [ ] Debugger?
+- [ ] Treesitter?
+- [ ] Breadcrums?
