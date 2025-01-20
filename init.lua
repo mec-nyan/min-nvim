@@ -19,3 +19,4 @@ require "diagnostic"
 require "lsp"
 require "smooth".setup()
 require "complete"
+require "kind"
