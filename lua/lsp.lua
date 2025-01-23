@@ -61,6 +61,22 @@ vim.api.nvim_create_autocmd('FileType', {
 	callback = start_gopls,
 })
 
+--- Start C/C++'s language server.
+-- Depends on "clangd" beng installed.
+local function start_clangd()
+	vim.lsp.start({
+		name = 'Nano_clangd',
+		cmd = { 'clangd' },
+		root_dir = vim.fs.root(0, { 'Makefile', 'makefile' }),
+		single_file_support = true,
+	})
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = { 'c', 'cpp', 'h', 'hpp' },
+	callback = start_clangd,
+})
+
 --- Start Lua's language server.
 -- Depends on "lua-language-server" being installed.
 local function start_lua_ls()
@@ -98,6 +114,8 @@ local function restart_ls()
 		start_lua_ls()
 	elseif ft == 'rust' then
 		start_rust_analyzer()
+	elseif ft == 'c' or ft == 'cpp' then
+		start_clangd()
 	end
 end
 
