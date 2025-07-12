@@ -1,5 +1,9 @@
 -- My options.
 
+
+vim.g.mapleader = ' '
+
+
 vim.o.hlsearch = true
 vim.o.modeline = true
 vim.wo.number = true
